@@ -32,10 +32,11 @@ POSSIBILITY OF SUCH DAMAGE.
     generators = "cmake"
     requires = [
         'boost/1.71.0',
+        'glm/0.9.9.8',
     ]
 
     def source(self):
-        self.run("git clone -b v0.9.2 https://github.com/cinder/Cinder")
+        self.run("git clone -b v0.9.2 --recurse-submodules https://github.com/cinder/Cinder")
         tools.replace_in_file("Cinder/CMakeLists.txt", "project( cinder )",
                               '''project( cinder )
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
@@ -46,13 +47,8 @@ conan_basic_setup()''')
         cmake.configure(source_folder="./Cinder")
         cmake.build()
 
-        # Explicit way:
-        # self.run('cmake %s/hello %s'
-        #          % (self.source_folder, cmake.command_line))
-        # self.run("cmake --build . %s" % cmake.build_config)
-
     def package(self):
-        self.copy("*.h", dst="include", src="hello")
+        self.copy("*.h", dst="include", src="./Cinder/include")
         self.copy("*cinder.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
