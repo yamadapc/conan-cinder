@@ -50,7 +50,7 @@ jobs:
         pip install --upgrade conan
 
     - name: Install ubuntu OpenGL
-      if: matrix.os == 'ubuntu-latest'
+      if: runner.os == 'Linux'
       run: sudo apt-get -y install freeglut3-dev
 
     - name: Create the package
