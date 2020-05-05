@@ -32,8 +32,8 @@ jobs:
         pip install --upgrade conan
 
     - if: matrix.os == 'ubuntu-latest'
-        run: |
-          apt-get -y install freeglut3-dev
+      run: |
+        apt-get -y install freeglut3-dev
 
     - name: Create the package
       env:
