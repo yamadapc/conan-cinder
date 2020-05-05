@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-latest, macos-latest]
+        platform: [ubuntu-latest]
 
     runs-on: ${{ matrix.platform }}
 
@@ -77,18 +77,12 @@ jobs:
           gstreamer1.0-pulseaudio \
           gstreamer1.0-plugins-bad
 
-    - name: Install mac dependencies
-      if: runner.os == 'macOS'
-      run: |
-        brew install glm
-        brew link --force glm
-
     - name: Create the package
       env:
         PACKAGE_USER: yamadapc
         PACKAGE_CHANNEL: stable
       run: |
-        conan create -s cppstd=17 -s build_type=Release $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
+        conan create -tf none -s cppstd=17 -s build_type=Release $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
 
     - name: Upload the package
       env:
@@ -99,3 +93,4 @@ jobs:
       run: |
         conan remote add $BINTRAY_REPOSITORY $BINTRAY_URL
         conan user -p $BINTRAY_TOKEN -r $BINTRAY_REPOSITORY $BINTRAY_USER
+        conan upload --all -r yamadapc_conan "cinder/*@yamadapc/*"
