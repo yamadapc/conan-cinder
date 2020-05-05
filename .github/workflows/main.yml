@@ -12,7 +12,6 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     - name: Set-up Python
       uses: actions/setup-python@v1
@@ -23,9 +22,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade conan
     - name: Create the package
+      env:
+        PACKAGE_USER: yamadapc
+        PACKAGE_CHANNEL: stable
       run: |
         conan create $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
     - name: Upload the package
+      env:
+        BINTRAY_URL: https://api.bintray.com/conan/yamadapc/yamadapc_conan
+        BINTRAY_REPOSITORY: yamadapc_conan
+        BINTRAY_TOKEN: ${{ secrets.BINTRAY_TOKEN }}
+        BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
       run: |
         conan remote add $BINTRAY_REPOSITORY $BINTRAY_URL
         conan user -p $BINTRAY_TOKEN -r $BINTRAY_REPOSITORY $BINTRAY_USER
