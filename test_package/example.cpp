@@ -76,5 +76,7 @@ void BasicApp::draw()
     gl::end();
 }
 
-// This line tells Cinder to actually create and run the application.
-CINDER_APP( BasicApp, RendererGl, prepareSettings )
+int main()
+{
+    return 0;
+}
