@@ -53,6 +53,7 @@ jobs:
     - name: Install ubuntu OpenGL
       if: runner.os == 'Linux'
       run: |
+        sudo apt-get update
         sudo apt-get -y install \
           libxcursor-dev \
           libxrandr-dev \
