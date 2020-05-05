@@ -13,20 +13,31 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Cache Conan directory
+      id: cache-conan
+      uses: actions/cache@v1
+      with:
+        path: ~/.conan
+        key: ${{ runner.os }}-conan
+
     - name: Set-up Python
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
+
     - name: Set-up conan
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade conan
+
     - name: Create the package
       env:
         PACKAGE_USER: yamadapc
         PACKAGE_CHANNEL: stable
       run: |
         conan create $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
+
     - name: Upload the package
       env:
         BINTRAY_URL: https://api.bintray.com/conan/yamadapc/yamadapc_conan
