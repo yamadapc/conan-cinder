@@ -31,12 +31,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade conan
 
+    - if: matrix.os == 'ubuntu-latest'
+        run: |
+          apt-get -y install freeglut3-dev
+
     - name: Create the package
       env:
         PACKAGE_USER: yamadapc
         PACKAGE_CHANNEL: stable
       run: |
-        conan create $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
+        conan create -s build_type=Release $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
 
     - name: Upload the package
       env:
