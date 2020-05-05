@@ -52,7 +52,29 @@ jobs:
 
     - name: Install ubuntu OpenGL
       if: runner.os == 'Linux'
-      run: sudo apt-get -y install freeglut3-dev libcurl4-openssl-dev
+      run: |
+        sudo apt-get -y install \
+          libxcursor-dev \
+          libxrandr-dev \
+          libxinerama-dev \
+          libxi-dev \
+          libgl1-mesa-dev \
+          libglu1-mesa-dev \
+          zlib1g-dev \
+          libfontconfig1-dev \
+          libmpg123-dev \
+          libsndfile1 \
+          libsndfile1-dev \
+          libpulse-dev \
+          libasound2-dev \
+          libcurl4-gnutls-dev \
+          libgstreamer1.0-dev \
+          libgstreamer-plugins-bad1.0-dev \
+          libgstreamer-plugins-base1.0-dev \
+          gstreamer1.0-libav \
+          gstreamer1.0-alsa \
+          gstreamer1.0-pulseaudio \
+          gstreamer1.0-plugins-bad
 
     - name: Create the package
       env:
