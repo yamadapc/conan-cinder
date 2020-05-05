@@ -81,7 +81,7 @@ jobs:
         PACKAGE_USER: yamadapc
         PACKAGE_CHANNEL: stable
       run: |
-        conan create -s build_type=Release $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
+        conan create -s cppstd=17 -s build_type=Release $GITHUB_WORKSPACE $PACKAGE_USER/$PACKAGE_CHANNEL
 
     - name: Upload the package
       env:
