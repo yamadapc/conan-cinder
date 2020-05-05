@@ -50,7 +50,7 @@ jobs:
       run: |
         pip install --upgrade conan
 
-    - name: Install ubuntu OpenGL
+    - name: Install linux dependencies
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
@@ -76,6 +76,12 @@ jobs:
           gstreamer1.0-alsa \
           gstreamer1.0-pulseaudio \
           gstreamer1.0-plugins-bad
+
+    - name: Install mac dependencies
+      if: runner.os == 'macOS'
+      run: |
+        brew install glm
+        brew link --force glm
 
     - name: Create the package
       env:
